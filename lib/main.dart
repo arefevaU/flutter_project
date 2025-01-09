@@ -34,17 +34,17 @@ class _MyHomePageState extends State<MyHomePage> {
     {
       'name': 'Бургер',
       'price': '200',
-      'image': 'assets/burger.png',
+      'image': 'https://png.pngtree.com/png-vector/20240710/ourmid/pngtree-burger-with-floating-ingredient-png-image_13054386.png',
     },
     {
       'name': 'Пицца',
       'price': '200',
-      'image': 'assets/pizza.png',
+      'image': 'https://png.pngtree.com/png-vector/20240710/ourmid/pngtree-burger-with-floating-ingredient-png-image_13054386.png',
     },
     {
       'name': 'Суши',
       'price': '200',
-      'image': 'assets/sushi.png',
+      'image': 'https://png.pngtree.com/png-vector/20240710/ourmid/pngtree-burger-with-floating-ingredient-png-image_13054386.png',
     },
   ];
 
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(12.0),
-                              child: Image.asset(
+                              child: Image.network(
                                 product['image']!,
                                 fit: BoxFit.cover,
                                 width: double.infinity,
