@@ -7,7 +7,6 @@ int? id;
 String? apiIP = '127.0.0.1:5000';
 int selectedFilter = 1;
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -30,7 +29,24 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> {  
+  final List<Map<String, String>> _products = [
+    {
+      'name': 'Бургер',
+      'price': '200',
+      'image': 'assets/burger.png',
+    },
+    {
+      'name': 'Пицца',
+      'price': '200',
+      'image': 'assets/pizza.png',
+    },
+    {
+      'name': 'Суши',
+      'price': '200',
+      'image': 'assets/sushi.png',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +69,80 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.tealAccent,
         child: Column(
           children: [
-            CategoryButtons()
+            CategoryButtons(),
+            Expanded(
+              child: ListView.builder(
+                //padding: EdgeInsets.all(8.0),
+                itemCount: _products.length,
+                itemBuilder: (context, index) {
+                  final product = _products[index];
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Card(
+                      elevation: 4,
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12.0),
+                              child: Image.asset(
+                                product['image']!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 150,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    product['name']!,
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  product['price']!,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.favorite_border),
+                                      onPressed: () {
+                                        // Логика добавления в избранное
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.shopping_cart),
+                                      onPressed: () {
+                                        // Логика добавления в корзину
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              )
+            )
           ],
         ),
       ),
