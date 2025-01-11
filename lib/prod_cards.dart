@@ -9,6 +9,10 @@ class ProductCards extends StatefulWidget {
 }
 
 class _ProdCardsState extends State<ProductCards> {
+  Widget Loading(BuildContext context) {
+    return Center(child: CircularProgressIndicator());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -33,11 +37,35 @@ class _ProdCardsState extends State<ProductCards> {
                       borderRadius: BorderRadius.circular(12.0),
                       child: Stack(
                         children: [
-                          Image.network(
-                            product[index].photoPath!,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                            height: 150,
+                          Stack(
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                          top: MediaQuery.sizeOf(context)
+                                              .height) *
+                                      0.05,
+                                  child: Loading(context)),
+                              Image.network(product[index].photoPath!,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: 150, frameBuilder: (context, child,
+                                      frame, wasSynchronouslyLoaded) {
+                                return child;
+                              }, loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                print(loadingProgress);
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                // Future.delayed(Duration(seconds: 1), () {
+                                //   return;
+                                // });
+                                // return Center(child: CircularProgressIndicator());
+                              }),
+                            ],
                           ),
                           IconButton(
                             icon: Icon(Icons.favorite_border),
