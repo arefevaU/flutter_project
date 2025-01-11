@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/api_request.dart';
 import 'package:flutter_application/registration.dart';
 import 'package:http/http.dart' as http;
+import 'category_buttons.dart';
 import 'main.dart';
 
 List category = List.empty();
+List products = List.empty();
+void filterProducts() {
+  product = products.where((prd) => prd.catId == selectedFilter).toList();
+}
 
 class AuthorizationScreen extends StatefulWidget {
   const AuthorizationScreen({super.key});
@@ -65,9 +70,9 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(10), 
-                        child: Text('Авторизация', style: TextStyle(fontSize: 28))
-                        ),
+                          padding: EdgeInsets.all(10),
+                          child: Text('Авторизация',
+                              style: TextStyle(fontSize: 28))),
                       TextFormField(
                         decoration: InputDecoration(labelText: 'email'),
                         onSaved: (newValue) => email = newValue!,
@@ -90,31 +95,42 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ElevatedButton(
-                              onPressed: () async {
-                                //print('nazali');
-                                var form = authKey.currentState;
-                                form?.validate;
-                                await formValidate(email, password);
-                                if (form!.validate()) {
-                                  form.save();
-                                  //print('id: $id');
-                                  final categories = await obtainJsonCategories();
-                                  setState(() {
-                                    category = categories;
-                                  });
-                                  Navigator.pop(context);
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                                }
-                              }, 
-                              child: Text('Войти')
-                              ),
+                                onPressed: () async {
+                                  //print('nazali');
+                                  var form = authKey.currentState;
+                                  form?.validate;
+                                  await formValidate(email, password);
+                                  if (form!.validate()) {
+                                    form.save();
+                                    //print('id: $id');
+                                    final categories =
+                                        await obtainJsonCategories();
+                                    setState(() {
+                                      category = categories;
+                                    });
+                                    final product = await obtainJsonProducts();
+                                    setState(() {
+                                      products = product;
+                                    });
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MyHomePage()));
+                                  }
+                                },
+                                child: Text('Войти')),
                             ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.push(context, MaterialPageRoute(builder:(context) => RegistrationScreen()));
-                              }, 
-                              child: Text('Зарегистироваться')
-                              ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RegistrationScreen()));
+                                },
+                                child: Text('Зарегистироваться')),
                           ],
                         ),
                       )

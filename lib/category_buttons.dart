@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/authorization.dart';
 import 'main.dart';
 
+List product = products.where((prd) => prd.catId == 1).toList();
+
 class CategoryButtons extends StatefulWidget {
-  const CategoryButtons({super.key});
+  // const CategoryButtons({super.key});
+  final VoidCallback function;
+  CategoryButtons({Key? key, required this.function}) : super(key: key);
 
   @override
-  State<CategoryButtons> createState() => _CategoryButtonsState();
+  State<CategoryButtons> createState() => CategoryButtonsState();
 }
 
-class _CategoryButtonsState extends State<CategoryButtons> {
+class CategoryButtonsState extends State<CategoryButtons> {
+  void refresh() {
+    //
+  }
   Widget buttons(BuildContext context, List<dynamic> values) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -20,14 +27,15 @@ class _CategoryButtonsState extends State<CategoryButtons> {
           child: SizedBox(
             width: 200,
             child: RadioListTile(
-              title: Text(values[index].cat_name),
-              value: values[index].cat_id,
+              title: Text(values[index].catName),
+              value: values[index].catId,
               groupValue: selectedFilter,
               onChanged: (value) {
                 setState(() {
                   selectedFilter = value!;
+                  filterProducts();
                 });
-                //print('${values[index].cat_name} value $value');
+                widget.function();
               },
             ),
           ),
@@ -35,7 +43,6 @@ class _CategoryButtonsState extends State<CategoryButtons> {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
