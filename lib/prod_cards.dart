@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/api_request.dart';
 import 'authorization.dart';
-import 'category_buttons.dart';
+// import 'category_buttons.dart';
 import 'main.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,7 +9,9 @@ class ProductCards extends StatefulWidget {
   //const ProductCards({super.key});
 
   final VoidCallback function;
-  ProductCards({Key? key, required this.function}) : super(key: key);
+  List product;
+  ProductCards({Key? key, required this.function, required this.product})
+      : super(key: key);
 
   @override
   State<ProductCards> createState() => ProdCardsState();
@@ -56,7 +58,7 @@ class ProdCardsState extends State<ProductCards> {
     return Expanded(
         child: ListView.builder(
       //padding: EdgeInsets.all(8.0),
-      itemCount: product.length,
+      itemCount: widget.product.length,
       itemBuilder: (context, index) {
         //final prod = product[index];
         return Padding(
@@ -77,19 +79,19 @@ class ProdCardsState extends State<ProductCards> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image.network(
-                                product[index].photoPath!,
+                                widget.product[index].photoPath!,
                               ),
                             ),
                             Padding(
                                 padding: EdgeInsets.all(10),
                                 child: Column(
                                   children: [
-                                    Text(product[index].prodName!),
-                                    Text(product[index].description!),
+                                    Text(widget.product[index].prodName!),
+                                    Text(widget.product[index].description!),
                                     Text(
-                                        '${product[index].gram!.toString()} г.'),
+                                        '${widget.product[index].gram!.toString()} г.'),
                                     Text(
-                                        '${product[index].price!.toString()} руб.')
+                                        '$widget.{product[index].price!.toString()} руб.')
                                   ],
                                 ))
                           ],
@@ -121,7 +123,8 @@ class ProdCardsState extends State<ProductCards> {
                                                   .height) *
                                           0.05,
                                       child: Loading(context)),
-                                  Image.network(product[index].photoPath!,
+                                  Image.network(
+                                      widget.product[index].photoPath!,
                                       fit: BoxFit.cover,
                                       width: double.infinity,
                                       height: 150, frameBuilder: (context,
@@ -147,16 +150,20 @@ class ProdCardsState extends State<ProductCards> {
                               ),
                               IconButton(
                                 icon: Icon(
-                                    isFavourite(product[index].prodId) == true
+                                    isFavourite(widget.product[index].prodId) ==
+                                            true
                                         ? Icons.favorite
                                         : Icons.favorite_border),
                                 //color: const Color.fromARGB(255, 158, 52, 52),
                                 onPressed: () async {
-                                  if (isFavourite(product[index].prodId) ==
+                                  if (isFavourite(
+                                          widget.product[index].prodId) ==
                                       false) {
-                                    await SendToDB(id, product[index].prodId);
+                                    await SendToDB(
+                                        id, widget.product[index].prodId);
                                   } else {
-                                    await DeleteFav(id, product[index].prodId);
+                                    await DeleteFav(
+                                        id, widget.product[index].prodId);
                                   }
                                   final favourites =
                                       await obtainJsonFavourites();
@@ -174,7 +181,7 @@ class ProdCardsState extends State<ProductCards> {
                         children: [
                           Expanded(
                             child: Text(
-                              product[index].prodName!,
+                              widget.product[index].prodName!,
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
@@ -182,7 +189,7 @@ class ProdCardsState extends State<ProductCards> {
                             ),
                           ),
                           Text(
-                            '${product[index].price!.toString()} руб.',
+                            '${widget.product[index].price!.toString()} руб.',
                             style: TextStyle(
                               fontSize: 16.0,
                               //color: Colors.green,

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  final GlobalKey<CategoryButtonsState> _key = GlobalKey();
+  //final GlobalKey<CategoryButtonsState> _key = GlobalKey();
   //const MyHomePage({super.key});
 
   @override
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             CategoryButtons(key: key, function: refresh),
-            ProductCards(key: key2, function: refresh),
+            ProductCards(key: key2, function: refresh, product: product),
           ],
         ),
       ),
