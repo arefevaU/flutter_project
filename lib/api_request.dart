@@ -70,10 +70,39 @@ Future<List<Products>> obtainJsonProducts() async {
   List<Products> list = converterJsonObject
       .map<Products>((json) => Products.fromJson(json))
       .toList();
-  list.forEach((element) {
-    print(element.prodName);
-    print(element.price);
-    print(element.photoPath);
+  // list.forEach((element) {
+  //   print(element.prodName);
+  //   print(element.price);
+  //   print(element.photoPath);
+  // });
+  return list;
+}
+
+class Favourites {
+  int favId, userId, prodId;
+
+  Favourites({
+    required this.favId,
+    required this.userId,
+    required this.prodId,
   });
+
+  factory Favourites.fromJson(Map<String, dynamic> json) {
+    return Favourites(
+        favId: json['fav_id'] as int,
+        userId: json['user_id'] as int,
+        prodId: json['product_id'] as int);
+  }
+}
+
+Future<List<Favourites>> obtainJsonFavourites() async {
+  var url = Uri.http(apiIP!, 'favourite', {'user_id': id.toString()});
+  final response = await http.get(url);
+  String responseBody = utf8.decode(response.bodyBytes);
+  dynamic jsonObject = jsonDecode(responseBody);
+  final converterJsonObject = jsonObject.cast<Map<String, dynamic>>();
+  List<Favourites> list = converterJsonObject
+      .map<Favourites>((json) => Favourites.fromJson(json))
+      .toList();
   return list;
 }

@@ -39,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<CategoryButtonsState> key = GlobalKey();
+    final GlobalKey<ProdCardsState> key2 = GlobalKey();
     return Scaffold(
       appBar: AppBar(
         title: Text('mdskflksf'),
@@ -61,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             CategoryButtons(key: key, function: refresh),
-            ProductCards(),
+            ProductCards(key: key2, function: refresh),
           ],
         ),
       ),

@@ -11,6 +11,8 @@ void filterProducts() {
   product = products.where((prd) => prd.catId == selectedFilter).toList();
 }
 
+List favourite = List.empty();
+
 class AuthorizationScreen extends StatefulWidget {
   const AuthorizationScreen({super.key});
 
@@ -102,15 +104,16 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                                   await formValidate(email, password);
                                   if (form!.validate()) {
                                     form.save();
-                                    //print('id: $id');
+                                    print('id: $id');
                                     final categories =
                                         await obtainJsonCategories();
+                                    final product = await obtainJsonProducts();
+                                    final favourites =
+                                        await obtainJsonFavourites();
                                     setState(() {
                                       category = categories;
-                                    });
-                                    final product = await obtainJsonProducts();
-                                    setState(() {
                                       products = product;
+                                      favourite = favourites;
                                     });
                                     Navigator.pop(context);
                                     Navigator.push(
