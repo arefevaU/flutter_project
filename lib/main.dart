@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final GlobalKey<ProdCardsState> key2 = GlobalKey();
     return Scaffold(
       appBar: AppBar(
-        title: Text('mdskflksf'),
+        title: Text('Главная'),
         actions: [
           IconButton(
               onPressed: () {

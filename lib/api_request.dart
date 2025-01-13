@@ -106,3 +106,31 @@ Future<List<Favourites>> obtainJsonFavourites() async {
       .toList();
   return list;
 }
+
+class Basket {
+  int basketId, userId, prodId;
+
+  Basket({
+    required this.basketId, 
+    required this.userId, 
+    required this.prodId
+  });
+
+  factory Basket.fromJson(Map<String, dynamic> json) {
+    return Basket(
+      basketId: json['bask_id'] as int, 
+      userId: json['user_id'] as int, 
+      prodId: json['prod_id'] as int);
+  }
+}
+
+Future<List<Basket>> obtainJsonBasket() async {
+  var url = Uri.http(apiIP!, 'basket', {'user_id': id.toString()});
+  final response = await http.get(url);
+  String responseBody = utf8.decode(response.bodyBytes);
+  dynamic jsonObject = jsonDecode(responseBody);
+  final converterJsonObject = jsonObject.cast<Map<String, dynamic>>();
+  List<Basket> list = converterJsonObject.map<Basket>((json) => Basket.fromJson(json)).toList();
+  return list;
+}
+

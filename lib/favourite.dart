@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/authorization.dart';
 import 'package:flutter_application/bottom_appbar.dart';
-import 'package:flutter_application/category_buttons.dart';
 import 'package:flutter_application/prod_cards.dart';
-
-import 'authorization.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});
@@ -38,15 +35,19 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         title: Text('Избранное'),
       ),
       bottomNavigationBar: MyBottomAppbar(),
-      body: Expanded(
-        //color: Colors.pink,
-        child: ProductCards(
-            key: key,
-            function: () {
-              setState(() {});
-            },
-            product: ListFavourites()),
-      ),
+      body: favourite.isEmpty
+      ? Center(
+        child: Text(
+          'Нет избранных товаров',
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)
+        ),
+      )
+      : ProductCards(
+          key: key,
+          function: () {
+            setState(() {});
+          },
+          product: ListFavourites()),
     );
   }
 }

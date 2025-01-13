@@ -49,9 +49,9 @@ class ProdCardsState extends State<ProductCards> {
     }
   }
 
-  Refresh() {
-    setState(() {});
-  }
+  // refresh() {
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,6 @@ class ProdCardsState extends State<ProductCards> {
             padding: EdgeInsets.symmetric(horizontal: 32.0),
             child: GestureDetector(
               onTap: () {
-                print('tapka');
                 BuildContext dialog = context;
                 var prodCard = showDialog(
                   context: dialog,
@@ -88,12 +87,11 @@ class ProdCardsState extends State<ProductCards> {
                                   children: [
                                     Text(widget.product[index].prodName!),
                                     Text(widget.product[index].description!),
-                                    Text(
-                                        '${widget.product[index].gram!.toString()} г.'),
-                                    Text(
-                                        '$widget.{product[index].price!.toString()} руб.')
+                                    Text('${widget.product[index].gram!.toString()} г.'),
+                                    Text('${widget.product[index].price!.toString()} руб.')
                                   ],
-                                ))
+                                )
+                              )
                           ],
                         ),
                       ),
@@ -127,25 +125,21 @@ class ProdCardsState extends State<ProductCards> {
                                       widget.product[index].photoPath!,
                                       fit: BoxFit.cover,
                                       width: double.infinity,
-                                      height: 150, frameBuilder: (context,
-                                          child,
-                                          frame,
-                                          wasSynchronouslyLoaded) {
-                                    return child;
-                                  }, loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                    //print(loadingProgress);
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return Center(
-                                          child: CircularProgressIndicator());
-                                    }
-                                    // Future.delayed(Duration(seconds: 1), () {
-                                    //   return;
-                                    // });
-                                    // return Center(child: CircularProgressIndicator());
-                                  }),
+                                      height: 150, 
+                                    //   frameBuilder: (context,
+                                    //       child,
+                                    //       frame,
+                                    //       wasSynchronouslyLoaded) {
+                                    // return child;
+                                    // }, 
+                                    // loadingBuilder: (context, child, loadingProgress) {
+                                    //   if (loadingProgress == null) {
+                                    //     return child;
+                                    //   } else {
+                                    //     return Center(
+                                    //         child: CircularProgressIndicator());
+                                    //   }
+                                  ),
                                 ],
                               ),
                               IconButton(
@@ -153,7 +147,8 @@ class ProdCardsState extends State<ProductCards> {
                                     isFavourite(widget.product[index].prodId) ==
                                             true
                                         ? Icons.favorite
-                                        : Icons.favorite_border),
+                                        : Icons.favorite_border
+                                  ),
                                 //color: const Color.fromARGB(255, 158, 52, 52),
                                 onPressed: () async {
                                   if (isFavourite(
@@ -165,8 +160,7 @@ class ProdCardsState extends State<ProductCards> {
                                     await DeleteFav(
                                         id, widget.product[index].prodId);
                                   }
-                                  final favourites =
-                                      await obtainJsonFavourites();
+                                  final favourites = await obtainJsonFavourites();
                                   setState(() {
                                     favourite = favourites;
                                   });
@@ -188,11 +182,9 @@ class ProdCardsState extends State<ProductCards> {
                               ),
                             ),
                           ),
-                          Text(
-                            '${widget.product[index].price!.toString()} руб.',
+                          Text('${widget.product[index].price!.toString()} руб.',
                             style: TextStyle(
                               fontSize: 16.0,
-                              //color: Colors.green,
                             ),
                           ),
                           Row(
@@ -200,8 +192,7 @@ class ProdCardsState extends State<ProductCards> {
                               IconButton(
                                 icon: Icon(Icons.shopping_cart),
                                 onPressed: () {
-                                  print(
-                                      'korzina'); // Логика добавления в корзину
+                                  print('korzina');
                                 },
                               ),
                             ],

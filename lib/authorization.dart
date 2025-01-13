@@ -10,7 +10,6 @@ List products = List.empty();
 void filterProducts() {
   product = products.where((prd) => prd.catId == selectedFilter).toList();
 }
-
 List favourite = List.empty();
 
 class AuthorizationScreen extends StatefulWidget {
@@ -98,7 +97,6 @@ class _AuthorizationScreenState extends State<AuthorizationScreen> {
                           children: [
                             ElevatedButton(
                                 onPressed: () async {
-                                  //print('nazali');
                                   var form = authKey.currentState;
                                   form?.validate;
                                   await formValidate(email, password);
